@@ -1,0 +1,14 @@
+package com.next.classanswer.service;
+
+import java.util.List;
+
+import com.next.classanswer.vo.ClassanswerSearchVO;
+import com.next.classanswer.vo.ClassanswerVO;
+
+public interface IClassanswerService {
+	
+	public List<ClassanswerVO> getClassAnswerListByCq(ClassanswerSearchVO classanswerSearchVO);
+	public void insertClassAnswer(ClassanswerVO classanswerVO);
+	public void updateClassAnswer(ClassanswerVO classanswerVO) throws Exception;
+	public void deleteClassAnswer(ClassanswerVO classanswerVO) throws Exception;
+}

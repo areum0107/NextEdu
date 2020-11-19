@@ -1,0 +1,14 @@
+package com.next.classquestion.service;
+
+import java.util.List;
+
+import com.next.classquestion.vo.ClassquestionVO;
+
+public interface IClassquestionService {
+
+	public ClassquestionVO getClassquestion(int cqNo);
+	public void insertBoard(ClassquestionVO classquestionVO);
+	public void updateBoard(ClassquestionVO classquestionVO);
+	public void deleteBoard(ClassquestionVO classquestionVO);
+	public List<ClassquestionVO> getClassquestionVOList();
+}

@@ -1,0 +1,56 @@
+package com.next.chat;
+
+import javax.inject.Inject;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+@Controller
+@RequestMapping("/chat")
+public class ChatController {
+	@Inject
+	private ChatRoomRepository chatRoomRepository;
+	
+		/* 전체 채팅방 목록 */
+		@GetMapping("/roomList.edu")
+	    public String roomList(Model model){
+	        model.addAttribute("roomList",chatRoomRepository.findAllRoom());
+	        return "chat/roomList";
+	    }
+
+	    @RequestMapping(value="/roomView.edu")
+	    public String roomView(@RequestParam String roomId, Model model){
+	        ChatRoom room = chatRoomRepository.findRoomById(roomId);
+	        model.addAttribute("room",room);   //이 떄 room에는 webSocketSeession과 handleMessage메소드가있다
+	        return "chat/roomView";
+	    }
+
+	    /* 채팅방생성(Insert) */
+	    @GetMapping("/roomInsert.edu")
+	    public String roomInsert(Model model){
+	        ChatRoomForm form = new ChatRoomForm();
+	        model.addAttribute("form",form);
+	        return "chat/roomInsert";
+	    }
+	    
+	    /* 채팅방생성 (InsertMessage)*/
+	    @RequestMapping("/roomInsertMessage.edu")
+	    public String roomInsertMessage(ChatRoomForm form){
+	        chatRoomRepository.createChatRoom(form.getName());
+	        
+	        return "redirect:/chat/roomList.edu";
+	    }
+	    
+	    
+	    @RequestMapping("/roomRTC.edu")
+	    public String roomRTC() {
+	    	
+	    	
+	    	return "chat/roomRTC";
+	    }
+}

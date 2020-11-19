@@ -1,0 +1,19 @@
+package com.next.classanswer.dao;
+
+import java.util.List;
+
+import org.apache.ibatis.annotations.Mapper;
+
+import com.next.classanswer.vo.ClassanswerSearchVO;
+import com.next.classanswer.vo.ClassanswerVO;
+
+@Mapper
+public interface IClassanswerDao {
+	
+	public int getClassAnswerCountByCq(ClassanswerSearchVO classanswerSearchVO);
+	public List<ClassanswerVO> getClassAnswerListByCq(ClassanswerSearchVO classanswerSearchVO);
+	public ClassanswerVO getClassAnswer(int caNo);
+	public int insertClassAnswer(ClassanswerVO classanswerVO);
+	public int updateClassAnswer(ClassanswerVO classanswerVO);
+	public int deleteClassAnswer(ClassanswerVO classanswerVO);
+}

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.next.classanswer.dao.IClassanswerDao">
+
+	<select id="getClassAnswerCountByCq" resultType="com.next.classanswer.vo.ClassanswerVO" parameterType="int">
+	SELECT ca_no
+	, ca_cq
+	from classanswer
+	where ca_no = #{caNo}
+	and ca_cq = #{caCq}
+	</select> 
+
+	<select id="getClassAnswer"
+		resultType="com.next.classanswer.vo.ClassanswerVO" parameterType="int">
+		SELECT ca_no
+		, ca_content
+		, ca_cq
+		, TO_CHAR(ca_reg_date,'YYYY-MM-DD') AS ca_reg_date
+		, TO_CHAR(ca_mod_date,'YYYY-MM-DD') AS ca_mod_date
+		, ca_attaches
+		, ca_mem_id
+		FROM classanswer
+		WHERE ca_no = #{caNo}
+	</select>
+
+	<insert id="insertClassAnswer"
+		parameterType="com.next.classanswer.vo.ClassanswerVO">
+		<selectKey resultType="int" keyProperty="caNo"
+			order="BEFORE">
+			SELECT seq_answer.nextval FROM dual
+		</selectKey>
+		INSERT INTO classanswer (
+		ca_no
+		, ca_content
+		, ca_reg_date
+		, ca_attaches
+		, ca_mem_id
+		, ca_cq
+		 )
+		VALUES (
+		#{caNo}
+		, #{caContent}
+		, SYSDATE
+		, #{caAttaches}
+		, #{caMemId}
+		, (SELECT cq_no from classquestion) )
+	</insert>
+
+	<update id="updateClassAnswer"
+		parameterType="com.next.classanswer.vo.ClassanswerVO">
+		UPDATE classanswer
+		SET ca_content = #{caContent}
+		, ca_mod_date = SYSDATE
+		WHERE ca_no = #{caNo}
+	</update>
+
+	<delete id="deleteClassAnswer"
+		parameterType="com.next.classanswer.vo.ClassanswerVO">
+ 	delete from classanswer where ca_no = #{caNo}
+	</delete> 
+
+</mapper>

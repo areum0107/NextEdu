@@ -1,0 +1,82 @@
+package com.next.classanswer.vo;
+
+import java.io.Serializable;
+
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+
+@SuppressWarnings("serial")
+public class ClassanswerVO implements Serializable {
+
+	private String caMemId;            /* 멤버 아이디 */
+	private int caCq;                  /* 클래스 1:1 글 번호 */
+	private String caContent;          /* 클래스 1:1 답변 내용 */
+	private String caRegDate;          /* 클래스 1:1 답변 등록일 */
+	private String caModDate;          /* 클래스 1:1 답변 수정일 */
+	private String caAttaches;         /* 클래스 1:1 첨부파일 */
+	private int caNo;
+	
+	@Override
+	public String toString() {
+		return ToStringBuilder.reflectionToString(this, ToStringStyle.MULTI_LINE_STYLE);
+	}
+
+	public String getCaMemId() {
+		return caMemId;
+	}
+
+	public void setCaMemId(String caMemId) {
+		this.caMemId = caMemId;
+	}
+
+	public int getCaCq() {
+		return caCq;
+	}
+
+	public void setCaCq(int caCq) {
+		this.caCq = caCq;
+	}
+
+	public String getCaContent() {
+		return caContent;
+	}
+
+	public void setCaContent(String caContent) {
+		this.caContent = caContent;
+	}
+
+	public String getCaRegDate() {
+		return caRegDate;
+	}
+
+	public void setCaRegDate(String caRegDate) {
+		this.caRegDate = caRegDate;
+	}
+
+	public String getCaModDate() {
+		return caModDate;
+	}
+
+	public void setCaModDate(String caModDate) {
+		this.caModDate = caModDate;
+	}
+
+	public String getCaAttaches() {
+		return caAttaches;
+	}
+
+	public void setCaAttaches(String caAttaches) {
+		this.caAttaches = caAttaches;
+	}
+
+	public int getCaNo() {
+		return caNo;
+	}
+
+	public void setCaNo(int caNo) {
+		this.caNo = caNo;
+	}
+	
+	
+	
+}

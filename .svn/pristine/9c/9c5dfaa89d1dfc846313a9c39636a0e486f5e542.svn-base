@@ -1,0 +1,25 @@
+package com.next.sitequestion.dao;
+
+import java.util.List;
+
+import org.apache.ibatis.annotations.Mapper;
+
+import com.next.common.vo.PagingVO;
+import com.next.login.vo.UserVO;
+import com.next.sitequestion.vo.SitequestionVO;
+
+@Mapper
+public interface ISitequestionDao {
+
+	public int getSitequestionVOCount(PagingVO pagingVO);
+	public List<SitequestionVO> getSitequestionVOList(PagingVO pagingVO);
+	
+	public List<SitequestionVO> getSitequestionVOEachList(UserVO userVO); /* */
+	
+	public SitequestionVO getSitequestionVO(int sqNo);
+	public int insertSitequestionVO(SitequestionVO sitequestionVO);
+	public int updateSitequestionVO(SitequestionVO sitequestionVO);
+	public int updateSitequestionVO2(SitequestionVO sitequestionVO); /* 답변완료 변경부분 */
+	public int deleteSitequestionVO(SitequestionVO sitequestionVO);
+	
+}

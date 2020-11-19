@@ -1,0 +1,61 @@
+package com.next.sitenotice.service;
+
+import java.util.List;
+
+import javax.inject.Inject;
+
+import org.springframework.stereotype.Service;
+
+import com.next.sitenotice.dao.ISitenoticeDao;
+import com.next.sitenotice.vo.SitenoticeVO;
+import com.next.sitequestion.vo.SitequestionSearchVO;
+
+@Service
+public class SitenoticeServiceImpl implements ISitenoticeService {
+	
+	@Inject
+	private ISitenoticeDao sitenoticeDao;
+
+	// site notice 리스트
+	@Override
+	public List<SitenoticeVO> getSitenoticeVOList(SitequestionSearchVO sitequestionSearchVO) {
+		int cnt = sitenoticeDao.getSitenoticeVOCount(sitequestionSearchVO);
+		sitequestionSearchVO.setTotalRowCount(cnt);
+		sitequestionSearchVO.pageSetting();
+		
+		List<SitenoticeVO> sitenoticeVOList = sitenoticeDao.getSitenoticeVOList(sitequestionSearchVO);
+		return sitenoticeVOList;
+	}
+
+	@Override
+	public SitenoticeVO getSitenoticeVO(int snNo) {
+		
+		SitenoticeVO sitenoticeVO = sitenoticeDao.getSitenoticeVO(snNo);
+		
+		return sitenoticeVO;
+	}
+
+	@Override
+	public void insertSitenoticeVO(SitenoticeVO sitenoticeVO) {
+		sitenoticeDao.insertSitenoticeVO(sitenoticeVO);
+		
+	}
+
+	@Override
+	public void updateSitenoticeVO(SitenoticeVO sitenoticeVO) {
+		SitenoticeVO sitenoticeVO2 = sitenoticeDao.getSitenoticeVO(sitenoticeVO.getSnNo());
+		
+		int cnt = sitenoticeDao.updateSitenoticeVO(sitenoticeVO);
+		
+	}
+
+	@Override
+	public void deleteSitenoticeVO(SitenoticeVO sitenoticeVO) {
+		
+		SitenoticeVO sitenoticeVO2 = sitenoticeDao.getSitenoticeVO(sitenoticeVO.getSnNo());
+		
+		int cnt = sitenoticeDao.deleteSitenoticeVO(sitenoticeVO);
+		
+	}
+
+}

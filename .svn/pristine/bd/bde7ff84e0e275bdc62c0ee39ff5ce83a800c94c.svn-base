@@ -1,0 +1,21 @@
+package com.next.sitequestion.dao;
+
+import java.util.List;
+
+import org.apache.ibatis.annotations.Mapper;
+
+import com.next.common.vo.PagingVO;
+import com.next.sitequestion.vo.SitequestionVO;
+
+@Mapper
+public interface ISitequestionDao {
+
+	public int getSitequestionVOCount(PagingVO pagingVO);
+	public List<SitequestionVO> getSitequestionVOList(PagingVO pagingVO);
+	public SitequestionVO getSitequestionVO(int sqNo);
+	public int insertSitequestionVO(SitequestionVO sitequestionVO);
+	public int updateSitequestionVO(SitequestionVO sitequestionVO);
+	public int updateSitequestionVO2(SitequestionVO sitequestionVO);
+	public int deleteSitequestionVO(SitequestionVO sitequestionVO);
+	
+}

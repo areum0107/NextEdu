@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper
+	namespace="com.next.classreferenceroom.dao.IClassreferenceroomDao">
+
+	<select id="getClassreferenceroomVOList"
+		resultType="com.next.classreferenceroom.vo.ClassreferenceroomVO"
+		parameterType="com.next.classreferenceroom.vo.ClassreferenceroomVO">
+		SELECT cr_no
+		, cr_category
+		, cr_title
+		, cr_content
+		, TO_CHAR(cr_reg_date,'YYYY-MM-DD') AS cr_reg_date
+		, TO_CHAR(cr_mod_date,'YYYY-MM-DD') AS cr_mod_date
+		, cr_attaches
+		, cr_mem_id
+		FROM (SELECT * FROM classreferenceroom ORDER BY cr_no DESC)
+	</select>
+
+	<select id="getClassreferenceroom"
+		resultType="com.next.classreferenceroom.vo.ClassreferenceroomVO"
+		parameterType="int">
+		SELECT cr_no
+		, cr_category
+		, cr_title
+		, cr_content
+		, TO_CHAR(cr_reg_date,'YYYY-MM-DD') AS cr_reg_date
+		, TO_CHAR(cr_mod_date,'YYYY-MM-DD') AS cr_mod_date
+		, cr_attaches
+		, cr_mem_id
+		FROM classreferenceroom
+		WHERE cr_no = #{crNo}
+	</select>
+
+	<insert id="insertBoard"
+		parameterType="com.next.classreferenceroom.vo.ClassreferenceroomVO">
+		<selectKey resultType="int" keyProperty="crNo"
+			order="BEFORE">
+			SELECT seq_classreferenceroom.nextval FROM dual
+		</selectKey>
+		INSERT INTO classreferenceroom (
+		cr_no, cr_category
+		, cr_title, cr_content
+		, cr_reg_date, cr_attaches
+		, cr_mem_id )
+		VALUES (
+		#{crNo}, #{crCategory}
+		, #{crTitle}, #{crContent}
+		, SYSDATE, #{crAttaches}
+		, #{crMemId} )
+	</insert>
+
+	<update id="updateBoard"
+		parameterType="com.next.classreferenceroom.vo.ClassreferenceroomVO">
+		UPDATE classreferenceroom
+		SET cr_title = #{crTitle}
+		, cr_category= #{crCategory}
+		, cr_content = #{crContent}
+		, cr_mod_date = SYSDATE
+		WHERE cr_no = #{crNo}
+	</update>
+
+	<delete id="deleteBoard"
+		parameterType="com.next.classreferenceroom.vo.ClassreferenceroomVO">
+  	delete from classreferenceroom where cr_no = #{crNo}
+	</delete>
+
+</mapper>

@@ -1,0 +1,36 @@
+package com.next.classanswer.vo;
+
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+
+import com.next.common.vo.PagingVO;
+
+@SuppressWarnings("serial")
+public class ClassanswerSearchVO extends PagingVO {
+
+	private int caCq;	/* 부모 번호 */
+	private int caNo;
+	
+	@Override
+	public String toString() {
+		return ToStringBuilder.reflectionToString(this, ToStringStyle.MULTI_LINE_STYLE);
+	}
+
+	public int getCaCq() {
+		return caCq;
+	}
+
+	public void setCaCq(int caCq) {
+		this.caCq = caCq;
+	}
+
+	public int getCaNo() {
+		return caNo;
+	}
+
+	public void setCaNo(int caNo) {
+		this.caNo = caNo;
+	}
+	
+	
+}

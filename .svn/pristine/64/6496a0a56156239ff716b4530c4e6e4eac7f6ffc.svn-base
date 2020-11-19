@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.next.classquestion.dao.IClassquestionDao">
+
+ <select id="getClassquestionVOList"
+		resultType="com.next.classquestion.vo.ClassquestionVO"
+		parameterType="com.next.classquestion.vo.ClassquestionVO">
+		SELECT cq_no
+		, cq_category
+		, cq_title
+		, cq_content
+		, TO_CHAR(cq_reg_date,'YYYY-MM-DD') AS cq_reg_date
+		, TO_CHAR(cq_mod_date,'YYYY-MM-DD') AS cq_mod_date
+		, cq_attaches
+		, cq_mem_id
+		, cq_answer_yn
+		FROM (SELECT * FROM classquestion ORDER BY cq_no DESC)
+	</select>
+
+	<select id="getClassquestion"
+		resultType="com.next.classquestion.vo.ClassquestionVO" parameterType="int">
+		SELECT cq_no
+		, cq_category
+		, cq_title
+		, cq_content
+		, TO_CHAR(cq_reg_date,'YYYY-MM-DD') AS cq_reg_date
+		, TO_CHAR(cq_mod_date,'YYYY-MM-DD') AS cq_mod_date
+		, cq_attaches
+		, cq_mem_id
+		, cq_answer_yn
+		FROM classquestion
+		WHERE cq_no = #{cqNo}
+	</select>
+
+	<insert id="insertBoard"
+		parameterType="com.next.classquestion.vo.ClassquestionVO">
+		<selectKey resultType="int" keyProperty="cqNo"
+			order="BEFORE">
+			SELECT seq_classquestion.nextval FROM dual
+		</selectKey>
+		INSERT INTO classquestion (
+		cq_no
+		, cq_category
+		, cq_title
+		, cq_content
+		, cq_reg_date
+		, cq_attaches
+		, cq_mem_id
+		, cq_answer_yn )
+		VALUES (
+		#{cqNo}
+		, #{cqCategory}
+		, #{cqTitle}
+		, #{cqContent}
+		, SYSDATE
+		, #{cqAttaches}
+		, #{cqMemId}
+		, 'N' )
+	</insert>
+
+	<update id="updateBoard"
+		parameterType="com.next.classquestion.vo.ClassquestionVO">
+		UPDATE classquestion
+		SET cq_title = #{cqTitle}
+		, cq_category = #{cqCategory}
+		, cq_content = #{cqContent}
+		, cq_mod_date = SYSDATE
+		WHERE cq_no = #{cqNo}
+	</update>
+
+	<delete id="deleteBoard"
+		parameterType="com.next.classquestion.vo.ClassquestionVO">
+ 	delete from classquestion where cq_no = #{cqNo}
+	</delete> 
+
+</mapper>

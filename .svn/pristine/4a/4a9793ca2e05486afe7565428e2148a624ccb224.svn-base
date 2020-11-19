@@ -1,0 +1,57 @@
+package com.next.classanswer.service;
+
+import java.util.List;
+
+import javax.inject.Inject;
+
+import org.springframework.stereotype.Service;
+
+import com.next.classanswer.dao.IClassanswerDao;
+import com.next.classanswer.vo.ClassanswerSearchVO;
+import com.next.classanswer.vo.ClassanswerVO;
+
+@Service
+public class ClassanswerServiceImpl implements IClassanswerService {
+
+	@Inject
+	private IClassanswerDao classanswerDao;
+
+	@Override
+	public void insertClassAnswer(ClassanswerVO classanswerVO) {
+		classanswerDao.insertClassAnswer(classanswerVO);
+	}
+
+	@Override
+	public void updateClassAnswer(ClassanswerVO classanswerVO) throws Exception {
+		ClassanswerVO answerVO = classanswerDao.getClassAnswer(classanswerVO.getCaNo());
+		if (answerVO == null) {
+			throw new Exception("글 번호[" + classanswerVO.getCaNo() + "]를 조회하지 못했습니다.");
+		}
+		if (!answerVO.getCaMemId().equals(classanswerVO.getCaMemId())) {
+			throw new Exception("해당 글의 작성자가 아닙니다.");
+		}
+		classanswerDao.updateClassAnswer(classanswerVO);
+	}
+
+	@Override
+	public void deleteClassAnswer(ClassanswerVO classanswerVO) throws Exception {
+		ClassanswerVO answerVO = classanswerDao.getClassAnswer(classanswerVO.getCaNo());
+		if (answerVO == null) {
+			throw new Exception("글 번호[" + classanswerVO.getCaNo() + "]를 조회하지 못했습니다.");
+		}
+		if (!answerVO.getCaMemId().equals(classanswerVO.getCaMemId())) {
+			throw new Exception("해당 글의 작성자가 아닙니다.");
+		}
+		classanswerDao.deleteClassAnswer(classanswerVO);
+	}
+
+	@Override
+	public List<ClassanswerVO> getClassAnswerListByCq(ClassanswerSearchVO classanswerSearchVO) {
+		int rowCount = classanswerDao.getClassAnswerCountByCq(classanswerSearchVO);
+		classanswerSearchVO.setTotalRowCount(rowCount);
+		classanswerSearchVO.pageSetting();
+		return classanswerDao.getClassAnswerListByCq(classanswerSearchVO);
+	}
+	
+	
+}

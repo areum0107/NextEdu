@@ -1,0 +1,18 @@
+package com.next.classquestion.dao;
+
+import java.util.List;
+
+import org.apache.ibatis.annotations.Mapper;
+
+import com.next.classquestion.vo.ClassquestionVO;
+
+
+@Mapper
+public interface IClassquestionDao {
+
+	public ClassquestionVO getClassquestion(int cqNo);
+	public int insertBoard(ClassquestionVO classquestionVO);
+	public int updateBoard(ClassquestionVO classquestionVO);
+	public int deleteBoard(ClassquestionVO classquestionVO);
+	public List<ClassquestionVO> getClassquestionVOList();
+}

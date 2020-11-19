@@ -1,0 +1,84 @@
+package com.next.classanswer.web;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import com.next.classanswer.service.IClassanswerService;
+import com.next.classanswer.vo.ClassanswerSearchVO;
+import com.next.classanswer.vo.ClassanswerVO;
+import com.next.login.vo.UserVO;
+
+@Controller
+@RequestMapping("/classanswer")
+public class ClassanswerController {
+
+	@Inject
+	private IClassanswerService classanswerService;
+
+	@RequestMapping(value = "/classanswerList.edu", produces = "application/json;charset=UTF-8")
+	public Map<String, Object> classanswerList(@ModelAttribute("classanswerSearchVO") ClassanswerSearchVO classanswerSearchVO, ModelMap model) throws Exception {
+		List<ClassanswerVO> classanswerList = classanswerService.getClassAnswerListByCq(classanswerSearchVO);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("result", true);
+		map.put("data", classanswerList);
+		map.put("count", classanswerList.size());		
+		return map;
+	}
+
+	@RequestMapping(value = "/classanswerInsert.edu", method = RequestMethod.POST)
+	public Map<String, Object> insertClassAnswer(@ModelAttribute("classanswerVO") ClassanswerVO classanswerVO,
+			HttpServletRequest servletRequest, HttpSession session) {
+		UserVO user = (UserVO) session.getAttribute("USER_INFO");
+		classanswerVO.setCaMemId(user.getUserId());
+		classanswerService.insertClassAnswer(classanswerVO);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("result", true);
+		map.put("message", "정상 등록 되었습니다.");
+		return map;
+	}
+
+	@RequestMapping(value = "/classanswerUpdate.edu")
+	public Map<String, Object> updateClassAnswer(@ModelAttribute("classanswerVO") ClassanswerVO classanswerVO,
+			HttpSession session) {
+		UserVO user = (UserVO) session.getAttribute("USER_INFO");
+		classanswerVO.setCaMemId(user.getUserId());
+		Map<String, Object> map = new HashMap<String, Object>();
+		try {
+			classanswerService.updateClassAnswer(classanswerVO);
+			map.put("result", true);
+			map.put("message", "정상 등록 되었습니다.");
+			return map;
+		} catch (Exception e) {
+			map.put("result", false);
+			map.put("message", "접근에 실패했습니다.");
+			return map;
+		}
+	}
+
+	@RequestMapping(value = "/classanswerDelete.edu")
+	public Map<String, Object> deleteClassAnswer(@ModelAttribute("classanswerVO") ClassanswerVO classanswerVO,
+			HttpSession session) {
+		UserVO user = (UserVO) session.getAttribute("USER_INFO");
+		classanswerVO.setCaMemId(user.getUserId());
+		Map<String, Object> map = new HashMap<String, Object>();
+		try {
+			classanswerService.deleteClassAnswer(classanswerVO);
+			map.put("result", true);
+			map.put("message", "정상 삭제 되었습니다.");
+			return map;
+		} catch (Exception e) {
+			map.put("result", false);
+			map.put("message", "접근에 실패했습니다.");
+			return map;
+		}
+	}
+
+}
